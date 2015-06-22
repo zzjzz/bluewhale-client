@@ -1,0 +1,74 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.page-header {
+  margin: 0 0 12px;
+
+  h1, h2, h3, h4 {
+    margin: 0;
+  }
+
+  a {
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.modal-footer {
+  margin-top: 0;
+}
+
+#loading-bar-spinner {
+  top: 15px;
+  left: 50%;
+  margin-left: -10px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  width: 20px;
+  height: 20px;
+  border-top-color: #5bc0de;
+  border-left-color: #5bc0de;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.padding-top-15 {
+  padding-top: 15px;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
+}
+
+.table tbody > tr > th.middle,
+.table tbody > tr > td.middle {
+  vertical-align: middle;
+}

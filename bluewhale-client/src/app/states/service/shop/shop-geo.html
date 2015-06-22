@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.cancel()">
+        <span>&times;</span>
+    </button>
+    <h4 class="modal-title">编辑店铺地理位置</h4>
+</div>
+<div class="modal-body">
+    <form name="form" class="form-horizontal padding-top-15" novalidate>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                省市区
+            </label>
+
+            <div class="col-sm-7">
+                <p class="form-control-static">{{vm.shop.location.fullName}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                街道
+            </label>
+
+            <div class="col-sm-7">
+                <p class="form-control-static">{{vm.shop.street}}</p>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.bd.$touched) && form.bd.$invalid}">
+            <label class="col-sm-3 control-label">
+                商圈
+            </label>
+
+            <div class="col-sm-7">
+                <select name="bd"
+                        class="form-control"
+                        ng-model="vm.shop.bd"
+                        ng-options="bd.name for bd in vm.district.children track by bd.id"
+                        required>
+                    <option value="">-- 选择商圈 --</option>
+                </select>
+
+                <div ng-if="form.$submitted || form.bd.$touched" ng-messages="form.bd.$error">
+                    <span class="help-block" ng-message="required">商圈不能为空</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.lat.$touched) && form.lat.$invalid}">
+            <label class="col-sm-3 control-label">
+                <span class="text-danger">*</span> 纬度
+            </label>
+
+            <div class="col-sm-7">
+                <input type="text"
+                       name="lat"
+                       class="form-control"
+                       ng-model="vm.shop.lat"
+                       required
+                       latitude>
+
+                <div ng-if="form.$submitted || form.lat.$touched" ng-messages="form.lat.$error">
+                    <span class="help-block" ng-message="required">纬度不能为空</span>
+                    <span class="help-block" ng-message="latitude">纬度不正确</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.lng.$touched) && form.lng.$invalid}">
+            <label class="col-sm-3 control-label">
+                <span class="text-danger">*</span> 经度
+            </label>
+
+            <div class="col-sm-7">
+                <input type="text"
+                       name="lng"
+                       class="form-control"
+                       ng-model="vm.shop.lng"
+                       required
+                       longitude>
+
+                <div ng-if="form.$submitted || form.lng.$touched" ng-messages="form.lng.$error">
+                    <span class="help-block" ng-message="required">经度不能为空</span>
+                    <span class="help-block" ng-message="longitude">经度不正确</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <span class="text-danger margin-right-10" ng-if="vm.submitError">{{vm.submitError}}</span>
+    <button type="button" class="btn btn-primary" ng-click="vm.submit()" ng-disabled="vm.submitting">确定</button>
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+</div>

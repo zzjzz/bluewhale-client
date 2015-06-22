@@ -1,0 +1,51 @@
+<my-page-header>
+    <button type="button"
+            name="subtitle"
+            class="btn btn-xs btn-default"
+            ng-click="vm.backToList()">
+        返回数据集列表
+    </button>
+</my-page-header>
+
+<my-page-content>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>基本信息</span>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">ID：</span>
+                    {{vm.dataset.id}}
+                </td>
+                <td class="col-md-6">
+                    <span class="text-muted">代码：</span>
+                    {{vm.dataset.code}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">名称：</span>
+                    {{vm.dataset.name}}
+                </td>
+                <td>
+                    <span class="text-muted">备注：</span>
+                    {{vm.dataset.comment}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">状态：</span>
+                <span class="label"
+                      ng-class="{'label-success': vm.dataset.state === 'active', 'label-default': vm.dataset.state !== 'active'}">
+                    {{'DATASET.STATE.' + vm.dataset.state | uppercase | translate}}
+                </span>
+                </td>
+                <td>
+                    <span class="text-muted">创建时间：</span>
+                    {{vm.dataset.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</my-page-content>

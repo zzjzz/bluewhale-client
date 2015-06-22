@@ -1,0 +1,64 @@
+<my-page-header>
+    <span name="subtitle" class="dropdown" dropdown>
+        <a class="dropdown-toggle" dropdown-toggle href>
+            {{vm.curDataset.name}} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="dataset in vm.datasets | filter : vm.excludeCurDataset">
+                <a ui-sref="content.revision.index({datasetId: dataset.id})" ui-sref-opts="{inherit: false}">{{dataset.name}}</a>
+            </li>
+        </ul>
+    </span>
+    <button name="right" class="btn btn-sm btn-primary" ng-click="vm.addRevision();">创建版本</button>
+</my-page-header>
+
+<my-page-content>
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>适配产品</th>
+                <th>适配版本</th>
+                <th>适配城市</th>
+                <th>状态</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="revision in vm.revisions">
+                <td>{{revision.id}}</td>
+                <td>{{revision.app.name}}</td>
+                <td>{{revision.release.version}}</td>
+                <td>{{revision.city.name}}</td>
+                <td>
+                <span class="label"
+                      ng-class="{'label-success': revision.state === 'active', 'label-default': revision.state !== 'active'}">
+                    {{'REVISION.STATE.' + revision.state | uppercase | translate}}
+                </span>
+                </td>
+                <td>{{revision.updateTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                    <a ng-click="vm.editRevision(revision)" href>编辑</a>
+                    <a ng-click="vm.deleteRevision(revision)" href>删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

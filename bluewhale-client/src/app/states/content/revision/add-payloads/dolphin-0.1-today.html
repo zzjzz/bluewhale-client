@@ -1,0 +1,119 @@
+<div class="form-group"
+     ng-class="{'has-error': (form.$submitted || form.quote.$touched) && form.quote.$invalid}">
+    <label class="col-sm-2 control-label">
+        推荐语
+    </label>
+
+    <div class="col-sm-9">
+                <textarea name="quote"
+                          class="form-control"
+                          ng-model="vm.revision.payload.quote"
+                          rows="3"
+                          required></textarea>
+
+        <div ng-if="form.$submitted || form.quote.$touched" ng-messages="form.quote.$error">
+            <span class="help-block" ng-message="required">推荐语不能为空</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">
+        图文列表
+    </label>
+
+    <div class="col-sm-9">
+        <div class="panel panel-default no-margin-bottom">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th style="width: 106px;">图片</th>
+                        <th>链接类型</th>
+                        <th>链接目标</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="slide in vm.revision.payload.slides">
+                        <th class="middle">
+                            {{$index + 1}}
+                        </th>
+                        <td class="middle"
+                            ng-class="{'has-error': (form.$submitted || form['slide-{{$index}}-image'].$touched) && form['slide-{{$index}}-image'].$invalid}">
+                            <div class="thumbnail no-margin-bottom">
+                                <div class="btn-file">
+                                    <img ng-if="slide.image" ng-src="{{slide.image.url}}?s=80x80">
+                                    <img ng-if="!slide.image" my-holder="holder.js/80x80">
+                                    <input type="file" nv-file-select uploader="vm.uploader"
+                                           options="{slide: slide}">
+                                </div>
+                            </div>
+                            <input type="hidden" name="slide-{{$index}}-image" ng-model="slide.image" required>
+                        </td>
+                        <td class="middle"
+                            ng-class="{'has-error': (form.$submitted || form['slide-{{$index}}-target-type'].$touched) && form['slide-{{$index}}-target-type'].$invalid}">
+                            <select name="slide-{{$index}}-target-type"
+                                    class="form-control"
+                                    ng-model="slide.targetType"
+                                    ng-change="vm.chgSlideTgtType(slide)"
+                                    ng-options="type as name for (type, name) in vm.slideTargetTypes"
+                                    required>
+                            </select>
+                        </td>
+                        <td class="middle"
+                            ng-class="{'has-error': (form.$submitted || form['slide-{{$index}}-target'].$touched) && form['slide-{{$index}}-target'].$invalid}"
+                            ng-switch="slide.targetType">
+                            <div ng-switch-when="shop">
+                                <input type="text"
+                                       name="slide-{{$index}}-target"
+                                       class="form-control"
+                                       ng-model="slide.target"
+                                       typeahead="shop as shop.name for shop in vm.searchShops($viewValue)"
+                                       typeahead-editable="false"
+                                       typeahead-wait-ms="500"
+                                       placeholder="输入店铺ID或名称"
+                                       required>
+                            </div>
+                            <div ng-switch-when="product">
+                                <input type="text"
+                                       name="slide-{{$index}}-target"
+                                       class="form-control"
+                                       ng-model="slide.target"
+                                       typeahead="product as product.name for product in vm.searchProducts($viewValue)"
+                                       typeahead-editable="false"
+                                       typeahead-wait-ms="500"
+                                       placeholder="输入商品ID或名称"
+                                       required>
+                            </div>
+                            <div ng-switch-when="promotion">
+                                <input type="text"
+                                       name="slide-{{$index}}-target"
+                                       class="form-control"
+                                       ng-model="slide.target"
+                                       typeahead="promotion as promotion.summary for promotion in vm.searchPromotions($viewValue)"
+                                       typeahead-editable="false"
+                                       typeahead-wait-ms="500"
+                                       placeholder="输入活动ID或简介"
+                                       required>
+                            </div>
+                        </td>
+                        <td class="middle">
+                            <button type="button"
+                                    class="btn btn-xs btn-success"
+                                    ng-click="vm.addSlide($index)">
+                                追加
+                            </button>
+                            <button type="button"
+                                    class="btn btn-xs btn-danger"
+                                    ng-click="vm.deleteSlide($index)"
+                                    ng-disabled="vm.revision.payload.slides.length <= 1">
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

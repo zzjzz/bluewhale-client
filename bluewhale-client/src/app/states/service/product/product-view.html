@@ -1,0 +1,77 @@
+<my-page-header>
+    <button name="subtitle" class="btn btn-xs btn-default" ng-click="backTo('service.product.index')">返回商品列表</button>
+</my-page-header>
+<my-page-content>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>基本信息</span>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">ID：</span>
+                    {{vm.product.id}}
+                </td>
+                <td class="col-md-6">
+                    <span class="text-muted">名称：</span>
+                    {{vm.product.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">店铺：</span>
+                    <a ng-click="vm.viewShop(vm.product.shop)" href>{{vm.product.shop.name}}</a>
+                </td>
+                <td>
+                    <span class="text-muted">分类：</span>
+                    {{vm.product.category.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">销售价：</span>
+                    {{vm.product.salesPrice | currency : '￥'}}
+                </td>
+                <td>
+                    <span class="text-muted">折扣价：</span>
+                    {{vm.product.discPrice | currency : '￥'}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">状态：</span>
+                <span class="label"
+                      ng-class="{'label-success': vm.product.state === 'active', 'label-default': vm.product.state !== 'active'}">
+                    {{'PRODUCT.STATE.' + vm.product.state | uppercase | translate}}
+                </span>
+                </td>
+                <td>
+                    <span class="text-muted">创建时间：</span>
+                    {{vm.product.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>商品参数</span>
+
+            <div class="pull-right">
+                <button class="btn btn-xs btn-default" ng-click="vm.setProdStats(vm.product)">设置商品参数</button>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">收藏数：</span>
+                    {{vm.product.stats.favCount}}
+                </td>
+                <td class="col-md-6">
+                    <span class="text-muted">初始收藏数：</span>
+                    {{vm.product.stats.adjustFavCount}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</my-page-content>

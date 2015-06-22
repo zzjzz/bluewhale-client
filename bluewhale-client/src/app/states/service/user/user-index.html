@@ -1,0 +1,60 @@
+<my-page-header></my-page-header>
+<my-page-content>
+    <div class="well">
+        <form class="form-inline" ng-submit="vm.search()">
+            <input type="search" class="form-control" ng-model="vm.q" style="width: 300px;"
+                   placeholder="输入用户ID、用户名、昵称或手机号">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>昵称</th>
+                <th>手机号</th>
+                <th>Email</th>
+                <th>状态</th>
+                <th>注册时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in vm.items">
+                <td>{{user.id}}</td>
+                <td>
+                    <a ng-click="vm.viewUser(user)" href>{{user.alias}}</a>
+                </td>
+                <td>{{user.cellphone}}</td>
+                <td>{{user.email}}</td>
+                <td>
+            <span class="label"
+                  ng-class="{'label-success': user.state === 'active', 'label-default': user.state !== 'active'}">
+                {{'USER.STATE.' + user.state | uppercase | translate}}
+            </span>
+                </td>
+                <td>{{user.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                    <a ng-click="vm.setPassword(user)" href>重置密码</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

@@ -1,0 +1,77 @@
+<my-page-header></my-page-header>
+<my-page-content>
+    <div class="well">
+        <form class="form-inline" ng-submit="vm.search()">
+            <input type="search" class="form-control" ng-model="vm.q" style="width: 300px;" placeholder="输入店铺ID或名称">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>店铺名称</th>
+                <th>所有人</th>
+                <th>身份认证</th>
+                <th>品牌认证</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="shop in vm.items">
+                <td>{{shop.id}}</td>
+                <td>
+                    <a ng-click="vm.viewShop(shop)" href>{{shop.name}}</a>
+                </td>
+                <td>
+                    <a ng-click="vm.viewUser(shop.owner)" href>{{shop.owner.alias}}</a>
+                </td>
+                <td>
+                    <a class="label"
+                       ng-class="{'label-success': shop.approved, 'label-danger': !shop.approved}"
+                       ng-click="vm.toggleApproved(shop)"
+                       href>
+                        {{'SHOP.APPROVED.' + shop.approved | uppercase | translate}}
+                    </a>
+                </td>
+                <td>
+                    <a class="label"
+                       ng-class="{'label-success': shop.brandCert, 'label-danger': !shop.brandCert}"
+                       ng-click="vm.toggleBrandCert(shop)"
+                       href>
+                        {{'SHOP.BRAND_CERT.' + shop.brandCert | uppercase | translate}}
+                    </a>
+                </td>
+                <td>
+            <span class="label"
+                  ng-class="{'label-success': shop.state === 'active', 'label-default': shop.state !== 'active'}">
+                {{'SHOP.STATE.' + shop.state | uppercase | translate}}
+            </span>
+                </td>
+                <td>{{shop.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                    <a ng-click="vm.setGeoInfo(shop)" href>设置地理位置</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

@@ -1,0 +1,74 @@
+<my-page-header>
+    <button name="subtitle" class="btn btn-xs btn-default" ng-click="backTo('biz.reservation.index')">返回预订单列表</button>
+</my-page-header>
+<my-page-content>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>基本信息</span>
+
+            <div class="pull-right">
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus !=='SUBMITTED'"
+                        ng-click="vm.confirmReservation(vm.reservation)">
+                    确定
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus !=='SUBMITTED'"
+                        ng-click="vm.rejectReservation(vm.reservation)">
+                    拒绝
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus !=='CONFIRMED'"
+                        ng-click="vm.deliverReservation(vm.reservation)">
+                    配送
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus !=='DELIVERED'"
+                        ng-click="vm.dealReservation(vm.reservation)">
+                    成交
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus !=='DELIVERED'"
+                        ng-click="vm.undealReservation(vm.reservation)">
+                    失败
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="vm.reservation.reservationStatus ==='CLOSED'"
+                        ng-click="vm.closeReservation(vm.reservation)">
+                    关闭
+                </button>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">预订单ID：</span>{{vm.reservation.reservationId}}
+                </td>
+                <td>
+                    <span class="text-muted">状态：</span>
+                    <span class="label"
+                          ng-class="{'label-success': vm.reservation.reservationStatus === 'CLOSED', 'label-default': vm.reservation.reservationStatus !== 'CLOSED'}">{{'RESERVATION.STATE.' + vm.reservation.reservationStatus | uppercase | translate}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">客户：</span>{{vm.reservation.linkman}}
+                </td>
+                <td>
+                    <span class="text-muted">手机号：</span>{{vm.reservation.cellphone}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">送试地址：</span>{{vm.reservation.deliveryAddress}}
+                </td>
+                <td>
+                    <span class="text-muted">送试时间：</span>{{vm.reservation.deliveryDate*1000|date:
+                    'yyyy-MM-dd'}}{{vm.reservation.deliveryTimeRange}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">产品描述：</span>{{vm.reservation.productData}}
+                </td>
+                <td>
+                    <span class="text-muted">备注：</span>{{vm.reservation.comment}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</my-page-content>

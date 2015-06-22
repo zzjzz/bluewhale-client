@@ -1,0 +1,9 @@
+<div class="list-group">
+    <a class="list-group-item"
+       ng-repeat="item in items"
+       ui-sref="{{item.navState.name}}(item.navState.params)"
+       ui-sref-opts="{inherit: false, reload: true}"
+       ng-class="{active: $root.$state.includes(item.state.name, item.state.params)}">
+        {{item.title}}
+    </a>
+</div>

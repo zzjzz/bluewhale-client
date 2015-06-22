@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+!.gitkeep
+build/
+node_modules/
+release/
+vendor/
+*.css

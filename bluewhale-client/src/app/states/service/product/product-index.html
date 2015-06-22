@@ -1,0 +1,61 @@
+<my-page-header></my-page-header>
+<my-page-content>
+    <div class="well">
+        <form class="form-inline" ng-submit="vm.search()">
+            <input type="search" class="form-control" ng-model="vm.q" style="width: 300px;" placeholder="输入商品ID或名称">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品名称</th>
+                <th>店铺</th>
+                <th>分类</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="product in vm.items">
+                <td>{{product.id}}</td>
+                <td>
+                    <a ng-click="vm.viewProduct(product)" href>{{product.name}}</a>
+                </td>
+                <td>
+                    <a ng-click="vm.viewShop(product.shop)" href>{{product.shop.name}}</a>
+                </td>
+                <td>{{product.category.name}}</td>
+                <td>
+            <span class="label"
+                  ng-class="{'label-success': product.state === 'active', 'label-default': product.state !== 'active'}">
+                {{'PRODUCT.STATE.' + product.state | uppercase | translate}}
+            </span>
+                </td>
+                <td>{{product.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                    <a ng-click="vm.setProdStats(product)" href>参数设置</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

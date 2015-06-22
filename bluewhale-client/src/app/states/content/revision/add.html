@@ -1,0 +1,88 @@
+<my-page-header>
+    <button type="button"
+            name="subtitle"
+            class="btn btn-xs btn-default"
+            ng-click="backTo('content.revision.index')">
+        返回版本列表
+    </button>
+</my-page-header>
+
+<my-page-content>
+    <form name="form" class="form-horizontal padding-top-15" ng-submit="vm.submit(form)" novalidate>
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.app.$touched) && form.app.$invalid}">
+            <label class="col-sm-2 control-label">
+                适配产品
+            </label>
+
+            <div class="col-sm-9">
+                <select name="app"
+                        class="form-control"
+                        ng-model="vm.revision.app"
+                        ng-change="vm.refreshReleases()"
+                        ng-options="app.name for app in vm.apps track by app.id"
+                        required>
+                    <option value="">-- 请选择 --</option>
+                </select>
+
+                <div ng-if="form.$submitted || form.app.$touched" ng-messages="form.app.$error">
+                    <span class="help-block" ng-message="required">适配版本不能为空</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.release.$touched) && form.release.$invalid}">
+            <label class="col-sm-2 control-label">
+                适配产品版本
+            </label>
+
+            <div class="col-sm-9">
+                <select name="release"
+                        class="form-control"
+                        ng-model="vm.revision.release"
+                        ng-disabled="vm.loadingReleases"
+                        ng-options="release.version for release in vm.releases track by release.id"
+                        required>
+                    <option value="">-- 请选择 --</option>
+                </select>
+
+                <div ng-if="form.$submitted || form.release.$touched" ng-messages="form.release.$error">
+                    <span class="help-block" ng-message="required">适配产品版本不能为空</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.city.$touched) && form.city.$invalid}">
+            <label class="col-sm-2 control-label">
+                适配城市
+            </label>
+
+            <div class="col-sm-9">
+                <select name="city"
+                        class="form-control"
+                        ng-model="vm.revision.city"
+                        ng-options="city.name for city in vm.cities track by city.id"
+                        required>
+                    <option value="">-- 请选择 --</option>
+                </select>
+
+                <div ng-if="form.$submitted || form.city.$touched" ng-messages="form.city.$error">
+                    <span class="help-block" ng-message="required">适配城市不能为空</span>
+                </div>
+            </div>
+        </div>
+
+        <ng-include src="'states/content/revision/add-payloads/' + vm.dataset.code + '.html'"></ng-include>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9">
+                <!--<pre>{{vm.revision | json}}</pre>-->
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || vm.submittingForm">保存
+                </button>
+                <button type="button" class="btn btn-default" ng-click="backTo('content.revision.index')">取消</button>
+            </div>
+        </div>
+    </form>
+</my-page-content>

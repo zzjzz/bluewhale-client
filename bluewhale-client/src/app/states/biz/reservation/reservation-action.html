@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.cancel()">
+        <span>&times;</span>
+    </button>
+    <h4 class="modal-title">预订单处理</h4>
+</div>
+<div class="modal-body">
+    <form name="form" class="form-horizontal padding-top-15" novalidate>
+        <span ng-if="!(vm.actionName==='reject'|| vm.actionName==='undeal')">请确定是否执行预订单【{{'RESERVATION.ACTION.' + vm.actionName | uppercase | translate}}】操作？</span>
+
+        <div ng-if="vm.actionName==='reject'|| vm.actionName==='undeal'" class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.reason.$touched) && form.reason.$invalid}">
+            <label class="col-sm-3 control-label">
+                <span class="text-danger">*</span>
+                {{'RESERVATION.ACTION.' + vm.actionName | uppercase | translate}}原因
+            </label>
+
+            <div class="col-sm-7">
+                <input type="text"
+                       name="reason"
+                       class="form-control"
+                       ng-model="vm.action.reason"
+                       ng-change="form.reason.$validate()"
+                       ng-required="true"
+                       ng-minlength="2"
+                       ng-maxlength="512"/>
+
+                <div ng-if="form.$submitted || form.reason.$touched" ng-messages="form.reason.$error">
+                    <span class="help-block" ng-message="required">原因不能为空</span>
+                    <span class="help-block" ng-message="minlength">原因长度不能少于2位</span>
+                    <span class="help-block" ng-message="maxlength">原因长度不能超过512位</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <span class="text-danger margin-right-10" ng-if="vm.submitError">{{vm.submitError}}</span>
+    <button type="button" class="btn btn-primary" ng-click="vm.submit()" ng-disabled="vm.submitting">确定</button>
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+</div>

@@ -1,0 +1,111 @@
+<my-page-header>
+    <button name="subtitle" class="btn btn-xs btn-default" ng-click="backTo('service.shop.index')">返回店铺列表</button>
+</my-page-header>
+<my-page-content>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>基本信息</span>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">ID：</span>
+                    {{vm.shop.id}}
+                </td>
+                <td class="col-md-6">
+                    <span class="text-muted">名称：</span>
+                    {{vm.shop.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">所有人：</span>
+                    <a ng-click="vm.viewUser(vm.shop.owner)" href>{{vm.shop.owner.alias}}</a>
+                </td>
+                <td>
+                    <span class="text-muted">电话：</span>
+                    {{vm.shop.phone}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">营业时间：</span>
+                    {{vm.shop.busiOpenTime}} - {{vm.shop.busiCloseTime}}
+                </td>
+                <td>
+                    <span class="text-muted">身份认证：</span>
+                    <a class="label"
+                       ng-class="{'label-success': vm.shop.approved, 'label-danger': !vm.shop.approved}"
+                       ng-click="vm.toggleApproved(vm.shop)"
+                       href>
+                        {{'SHOP.APPROVED.' + vm.shop.approved | uppercase | translate}}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">品牌认证：</span>
+                    <a class="label"
+                       ng-class="{'label-success': vm.shop.brandCert, 'label-danger': !vm.shop.brandCert}"
+                       ng-click="vm.toggleBrandCert(vm.shop)"
+                       href>
+                        {{'SHOP.BRAND_CERT.' + vm.shop.brandCert | uppercase | translate}}
+                    </a>
+                </td>
+                <td>
+                    <span class="text-muted">状态：</span>
+                <span class="label"
+                      ng-class="{'label-success': vm.shop.state === 'active', 'label-default': vm.shop.state !== 'active'}">
+                    {{'SHOP.STATE.' + vm.shop.state | uppercase | translate}}
+                </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">创建时间：</span>
+                    {{vm.shop.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <pre class="no-margin-bottom">{{vm.shop.intro}}</pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>地理位置</span>
+
+            <div class="pull-right">
+                <button class="btn btn-xs btn-default" ng-click="vm.setGeoInfo(vm.shop)">编辑地理位置</button>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-6">
+                    <span class="text-muted">省市区：</span>
+                    {{vm.shop.location.fullName}}
+                </td>
+                <td class="col-md-6">
+                    <span class="text-muted">商圈：</span>
+                    {{vm.shop.bd.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="text-muted">街道：</span>
+                    {{vm.shop.street}}
+                </td>
+                <td>
+                    <span class="text-muted">纬/经度：</span>
+                    {{vm.shop.lat}}，{{vm.shop.lng}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</my-page-content>

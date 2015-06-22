@@ -1,0 +1,59 @@
+<my-page-header></my-page-header>
+<my-page-content>
+    <div class="well">
+        <form class="form-inline" ng-submit="vm.search()">
+            <input type="search" class="form-control" ng-model="vm.q" style="width: 300px;" placeholder="输入数据集ID、代码或名称">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>代码</th>
+                <th>名称</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="dataset in vm.items">
+                <td>{{dataset.id}}</td>
+                <td>
+                    <a ui-sref="content.dataset.view({datasetId: dataset.id})" href>{{dataset.code}}</a>
+                </td>
+                <td>
+                    <a ui-sref="content.dataset.view({datasetId: dataset.id})" href>{{dataset.name}}</a>
+                </td>
+                <td>
+                    <span class="label"
+                          ng-class="{'label-success': dataset.state === 'active', 'label-default': dataset.state !== 'active'}">
+                        {{'DATASET.STATE.' + dataset.state | uppercase | translate}}
+                    </span>
+                </td>
+                <td>{{dataset.createTime * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                    <a ui-sref="content.revision.index({datasetId: dataset.id})" href>数据版本</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

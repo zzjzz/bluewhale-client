@@ -1,0 +1,83 @@
+<my-page-header></my-page-header>
+<my-page-content>
+    <div class="well">
+        <form class="form-inline" ng-submit="vm.search()">
+            <input type="search" class="form-control" ng-model="vm.q" style="width: 300px;"
+                   placeholder="输入产品名称、客户名称或手机号">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped no-margin-bottom">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>客户</th>
+            <th>手机号</th>
+            <th>送试时间</th>
+            <th>送试地址</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="reservation in vm.items">
+            <td>
+                <a ng-click="vm.viewReservation(reservation)" href>{{reservation.reservationId}}</a>
+            </td>
+            <td>{{reservation.linkman}}</td>
+            <td>{{reservation.cellphone}}</td>
+            <td>{{reservation.deliveryDate*1000|date: 'yyyy-MM-dd'}} {{reservation.deliveryTimeRange}}</td>
+            <td>{{reservation.deliveryAddress}}</td>
+            <td>
+            <span class="label"
+                  ng-class="{'label-success': reservation.reservationStatus === 'CLOSED', 'label-default': reservation.reservationStatus !== 'CLOSED'}">
+                {{'RESERVATION.STATE.' + reservation.reservationStatus | uppercase | translate}}
+            </span>
+            </td>
+            <td>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus !=='SUBMITTED'"
+                        ng-click="vm.confirmReservation(reservation)">
+                    确定
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus !=='SUBMITTED'"
+                        ng-click="vm.rejectReservation(reservation)">
+                    拒绝
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus !=='CONFIRMED'"
+                        ng-click="vm.deliverReservation(reservation)">
+                    配送
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus !=='DELIVERED'"
+                        ng-click="vm.dealReservation(reservation)">
+                    成交
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus !=='DELIVERED'"
+                        ng-click="vm.undealReservation(reservation)">
+                    失败
+                </button>
+                <button class="btn btn-xs btn-default" ng-disabled="reservation.reservationStatus ==='CLOSED'"
+                        ng-click="vm.closeReservation(reservation)">
+                    关闭
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pagination
+            class="pagination"
+            ng-change="vm.changePage()"
+            ng-model="vm.currentPage"
+            total-items="vm.totalItems"
+            items-per-page="vm.itemsPerPage"
+            max-size="10"
+            rotate="true"
+            direction-links="true"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            boundary-links="true"
+            first-text="&laquo;"
+            last-text="&raquo;">
+    </pagination>
+</my-page-content>

@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.cancel()">
+        <span>&times;</span>
+    </button>
+    <h4 class="modal-title">商品参数设置</h4>
+</div>
+<div class="modal-body">
+    <form name="form" class="form-horizontal padding-top-15" novalidate>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                真实收藏数
+            </label>
+
+            <div class="col-sm-7">
+                <p class="form-control-static">{{vm.product.stats.favCount}}</p>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': (form.$submitted || form.adjustFavCount.$touched) && form.adjustFavCount.$invalid}">
+            <label class="col-sm-3 control-label">
+                <span class="text-danger">*</span> 初始收藏数
+            </label>
+
+            <div class="col-sm-7">
+                <input type="number"
+                       name="adjustFavCount"
+                       class="form-control"
+                       ng-model="vm.product.stats.adjustFavCount"
+                       pattern="\d+"
+                       required
+                       min="0">
+
+                <div ng-if="form.$submitted || form.adjustFavCount.$touched" ng-messages="form.adjustFavCount.$error">
+                    <span class="help-block" ng-message="required">不能为空</span>
+                    <span class="help-block" ng-message="number">请填写正确的数字</span>
+                    <span class="help-block" ng-message="pattern">请填写正确的数字</span>
+                    <span class="help-block" ng-message="min">不能小于0</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <span class="text-danger margin-right-10" ng-if="vm.submitError">{{vm.submitError}}</span>
+    <button type="button" class="btn btn-primary" ng-click="vm.submit()" ng-disabled="vm.submitting">确定</button>
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+</div>
